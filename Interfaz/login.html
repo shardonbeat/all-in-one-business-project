@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Acceso al Sistema — Bicicletas Mejía</title>
+  <meta name="description" content="Acceso a terminal local de gestión comercial, inventario y facturación" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .login-viewport {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-app);
+      padding: 24px 16px;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      background-color: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: 0 10px 25px -5px rgba(28, 25, 23, 0.1), 0 8px 10px -6px rgba(28, 25, 23, 0.05);
+      overflow: hidden;
+    }
+
+    .login-header-banner {
+      background-color: var(--sidebar-bg);
+      border-bottom: 1px solid var(--sidebar-border);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .login-brand-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .login-brand-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--primary-700);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    }
+
+    .login-brand-titles h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f5f5f4;
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .login-brand-titles p {
+      font-size: 12px;
+      color: #a8a29e;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .login-body {
+      padding: 24px;
+    }
+
+    .terminal-selector-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .terminal-segmented-control {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      background-color: var(--bg-app);
+      padding: 3px;
+      gap: 3px;
+      margin-bottom: 18px;
+    }
+
+    .terminal-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 8px 6px;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: var(--radius-xs);
+      text-align: center;
+      transition: all 120ms ease;
+    }
+    .terminal-btn:hover {
+      color: var(--text-main);
+    }
+    .terminal-btn.active {
+      background-color: #ffffff;
+      color: var(--text-main);
+      font-weight: 700;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .login-form-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .input-wrapper {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #78716c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+
+    .form-input.has-icon {
+      width: 100%;
+      height: 42px;
+      padding-left: 36px;
+      padding-right: 42px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      color: var(--text-main);
+      background-color: #ffffff;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-input.has-icon:focus {
+      border-color: var(--primary-600);
+      box-shadow: 0 0 0 3px rgba(21, 128, 61, 0.12);
+    }
+
+    .input-toggle-btn {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      padding: 6px;
+      cursor: pointer;
+      color: #78716c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-xs);
+      z-index: 2;
+      transition: color 0.15s ease;
+    }
+    .input-toggle-btn:hover {
+      color: var(--text-main);
+    }
+
+    .login-submit-btn {
+      width: 100%;
+      height: 42px;
+      margin-top: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      background-color: var(--primary-700);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(21, 128, 61, 0.25);
+      transition: all 120ms ease;
+    }
+    .login-submit-btn:hover {
+      background-color: var(--primary-800);
+    }
+    .login-submit-btn:active {
+      background-color: var(--primary-900);
+    }
+
+    .login-error-box {
+      display: none;
+      background-color: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      border-radius: var(--radius-xs);
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 14px;
+    }
+    .login-error-box.show {
+      display: block;
+    }
+
+    .login-footer-meta {
+      padding: 12px 24px;
+      background-color: var(--sidebar-surface);
+      border-top: 1px solid var(--sidebar-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: #a8a29e;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-viewport">
+    <div class="login-container">
+      
+      <!-- Encabezado de la Terminal -->
+      <div class="login-header-banner">
+        <div class="login-brand-meta">
+          <div class="login-brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="5.5" cy="17.5" r="3.5"/>
+              <circle cx="18.5" cy="17.5" r="3.5"/>
+              <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5L9 9H5"/>
+              <path d="M12 17.5V14l3.5-3.5L18 14"/>
+              <path d="m14 9 4-3"/>
+            </svg>
+          </div>
+          <div class="login-brand-titles">
+            <h1>Bicicletas Mejía, C.A.</h1>
+            <p>RIF: J-41235678-0 · Maracaibo, Estado Zulia, Venezuela</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-body">
+        <div id="login-error" class="login-error-box" role="alert">
+          Credenciales de acceso no válidas para esta terminal.
+        </div>
+
+        <div class="terminal-selector-label">Perfil de usuario:</div>
+        <div class="terminal-segmented-control" id="terminal-selector">
+          <button type="button" class="terminal-btn active" data-role="admin" data-user="admin" data-pass="admin123">
+            Administración
+          </button>
+          <button type="button" class="terminal-btn" data-role="cajero" data-user="cajero" data-pass="cajero123">
+            Caja
+          </button>
+          <button type="button" class="terminal-btn" data-role="bodeguero" data-user="bodeguero" data-pass="bodeguero123">
+            Almacén
+          </button>
+        </div>
+
+        <form id="login-form" class="login-form-fields" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="username">Usuario de sistema</label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                class="form-input has-icon"
+                placeholder="Identificador de usuario"
+                autocomplete="username"
+                value="admin"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="flex justify-between items-center">
+              <label class="form-label" for="password">Contraseña de acceso</label>
+            </div>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-input has-icon"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                value="admin123"
+                required
+              />
+              <button type="button" class="input-toggle-btn" id="toggle-password" aria-label="Mostrar u ocultar contraseña">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary login-submit-btn" id="login-btn">
+            <span class="btn-text">Iniciar sesión</span>
+            <span class="btn-loader" style="display:none">Verificando...</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const roleButtons = document.querySelectorAll('.terminal-btn');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    roleButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        roleButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        usernameInput.value = btn.dataset.user;
+        passwordInput.value = btn.dataset.pass;
+      });
+    });
+
+    const togglePassBtn = document.getElementById('toggle-password');
+    togglePassBtn.addEventListener('click', () => {
+      const isPass = passwordInput.type === 'password';
+      passwordInput.type = isPass ? 'text' : 'password';
+      togglePassBtn.innerHTML = isPass
+        ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>`
+        : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>`;
+    });
+
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('login-btn');
+      const text = btn.querySelector('.btn-text');
+      const loader = btn.querySelector('.btn-loader');
+      const error = document.getElementById('login-error');
+
+      const user = usernameInput.value.trim();
+      const pass = passwordInput.value;
+
+      btn.disabled = true;
+      text.style.display = 'none';
+      loader.style.display = 'inline';
+      error.classList.remove('show');
+
+      await new Promise(r => setTimeout(r, 200));
+
+      const credentials = {
+        'admin': { role: 'admin', name: 'Sebastián Mejía', caja: 'Caja Principal' },
+        'cajero': { role: 'cajero', name: 'Camila Morales', caja: 'Caja #2 - Ventas' },
+        'bodeguero': { role: 'bodeguero', name: 'Carlos Rendón', caja: 'Almacén Central' },
+        'almacenero': { role: 'bodeguero', name: 'Carlos Rendón', caja: 'Almacén Central' },
+        'bodega': { role: 'bodeguero', name: 'Carlos Rendón', caja: 'Almacén Central' }
+      };
+
+      if (credentials[user] && (pass === user + '123' || pass === 'bodeguero123' || pass === 'bodega123' || pass === 'admin123')) {
+        const sessionUser = {
+          username: user,
+          ...credentials[user],
+          loginTime: new Date().toISOString()
+        };
+        localStorage.setItem('bm_session', JSON.stringify(sessionUser));
+        window.location.href = 'index.html';
+      } else {
+        btn.disabled = false;
+        text.style.display = 'inline';
+        loader.style.display = 'none';
+        error.classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>

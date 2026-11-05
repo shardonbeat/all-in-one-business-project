@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bicicletas Mejía — Sistema de Gestión y Facturación</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/pos.css" />
+</head>
+<body>
+  <div class="app-layout" id="app-shell">
+
+    <!-- ── BARRA LATERAL DE NAVEGACIÓN ──────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="5.5" cy="17.5" r="3.5"/>
+            <circle cx="18.5" cy="17.5" r="3.5"/>
+            <path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5L9 9H5"/>
+            <path d="M12 17.5V14l3.5-3.5L18 14"/>
+            <path d="m14 9 4-3"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">Bicicletas Mejía</div>
+          <div class="brand-subtitle">Caja y almacén</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-menu">
+        <!-- SECCIÓN 1: GERENCIA -->
+        <div class="menu-heading" id="nav-sec-admin">Gerencia</div>
+
+        <button class="nav-btn" data-view="dashboard">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span class="nav-text">Panel gerencial</span>
+        </button>
+
+        <button class="nav-btn" data-view="reports">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <span class="nav-text">Reportes</span>
+        </button>
+
+        <button class="nav-btn" data-view="users">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span class="nav-text">Usuarios</span>
+        </button>
+
+        <!-- SECCIÓN 2: CAJA -->
+        <div class="menu-heading" id="nav-sec-pos">Caja</div>
+        
+        <button class="nav-btn" data-view="pos">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="nav-text">Caja</span>
+        </button>
+
+        <button class="nav-btn" data-view="shift">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><circle cx="12" cy="14" r="2"/></svg>
+          <span class="nav-text">Turno de caja</span>
+        </button>
+
+        <!-- SECCIÓN 3: ALMACÉN -->
+        <div class="menu-heading" id="nav-sec-warehouse">Almacén</div>
+
+        <button class="nav-btn" data-view="inventory">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          <span class="nav-text">Inventario</span>
+          <span class="nav-badge" id="nav-inventory-badge" style="display:none;">0</span>
+        </button>
+
+        <button class="nav-btn" data-view="purchases">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
+          <span class="nav-text">Compras</span>
+        </button>
+
+        <button class="nav-btn" data-view="adjustments">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          <span class="nav-text">Ajustes</span>
+        </button>
+
+        <!-- SECCIÓN 4: CONTACTOS -->
+        <div class="menu-heading" id="nav-sec-management">Contactos</div>
+
+        <button class="nav-btn" data-view="clients">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span class="nav-text">Clientes</span>
+        </button>
+
+        <button class="nav-btn" data-view="suppliers">
+          <svg class="nav-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <span class="nav-text">Proveedores</span>
+        </button>
+      </nav>
+
+      <!-- Perfil de Usuario en el pie del Sidebar -->
+      <div class="sidebar-user-panel">
+        <div class="user-avatar" id="current-user-avatar">A</div>
+        <div class="user-details">
+          <div class="user-name" id="current-user-name">Sebastián Mejía</div>
+          <div class="user-role-label" id="current-user-role">Administrador</div>
+        </div>
+        <button class="logout-btn" onclick="App.logout()" title="Cerrar sesión">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ── CONTENEDOR PRINCIPAL ─────────────────────────────── -->
+    <main class="main-content">
+      
+      <!-- Barra Superior Limpia -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle-btn" id="sidebar-toggle-btn" aria-label="Alternar navegación">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+          <div class="view-breadcrumb" id="breadcrumb-title">Caja</div>
+        </div>
+
+        <div class="topbar-right">
+          <!-- Tasa Oficial BCV del Día (Venezuela) -->
+          <button type="button" class="bcv-rate-pill" id="topbar-bcv-btn" onclick="App.openExchangeRateModal()" title="Haga clic para actualizar la Tasa Oficial BCV">
+            <span>Tasa BCV:</span>
+            <strong id="topbar-bcv-rate" class="bcv-rate-val font-mono">Bs. 894,88</strong>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+
+          <!-- Terminal / Estación Activa en Red Local -->
+          <div class="station-badge">
+            <span class="station-dot"></span>
+            <span id="current-user-caja">Caja Principal</span>
+          </div>
+
+          <!-- Botón de Atajos Rápidos de Mostrador -->
+          <button type="button" class="shortcuts-pill-btn" onclick="App.openShortcutsModal()" title="Ver atajos de teclado del mostrador">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M8 12h.001M12 12h.001M16 12h.001M6 16h12"/></svg>
+            <span>Atajos F2 · F4 · Esc</span>
+          </button>
+
+          <div class="system-time" id="system-live-clock">--:--:--</div>
+        </div>
+      </header>
+
+      <!-- ── VISTAS DE TRABAJO (UNA SOLA POR MÓDULO) ─────────── -->
+      <div class="views-wrapper">
+
+        <!-- 1. DASHBOARD GERENCIAL (SOLO ADMIN) -->
+        <section id="view-dashboard" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Panel gerencial de control</h1>
+              <p class="view-subheading">Auditoría en tiempo real de terminales y stock</p>
+            </div>
+            <div class="view-actions">
+              <button class="btn btn-secondary" onclick="App.renderDashboard()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                Actualizar
+              </button>
+            </div>
+          </div>
+
+          <!-- Tarjetas KPI -->
+          <div class="stats-row" id="dash-kpi-grid"></div>
+
+          <!-- Cuadrícula Gerencial -->
+          <div class="grid-2 mt-4" id="dash-middle-grid">
+            <!-- Auditoría de Cajas LAN Activas -->
+            <div class="card" id="dash-chart-card">
+              <div class="card-header">
+                <h2 class="card-title">Auditoría de cajas registradoras</h2>
+                <span class="badge badge-success">Cajas activas</span>
+              </div>
+              <div class="card-body">
+                <div class="drawer-status-list" id="dash-drawers-list"></div>
+              </div>
+            </div>
+
+            <!-- Tabla de Stock Crítico -->
+            <div class="card" id="dash-low-stock-card">
+              <div class="card-header">
+                <h2 class="card-title">Artículos en nivel crítico</h2>
+                <button class="btn btn-sm btn-secondary" onclick="App.navigate('inventory')">Ver todo</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Artículo</th>
+                      <th>Categoría</th>
+                      <th>Stock</th>
+                      <th>Mínimo</th>
+                      <th class="text-right" id="th-dash-low-stock-action">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dash-low-stock-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Historial de Ventas Recientes -->
+          <div class="card mt-4" id="dash-recent-sales-card">
+            <div class="card-header">
+              <h2 class="card-title">Últimas facturas registradas</h2>
+              <button class="btn btn-sm btn-primary" onclick="App.navigate('pos')">Nueva venta</button>
+            </div>
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>N° Factura</th>
+                    <th>Cliente</th>
+                    <th>Forma de pago</th>
+                    <th>Hora</th>
+                    <th class="text-right">Total</th>
+                    <th class="text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-recent-sales-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PUNTO DE VENTA (POS) -->
+        <section id="view-pos" class="view-section">
+          <div class="pos-container">
+            
+            <!-- Panel Izquierdo: Catálogo y Búsqueda -->
+            <div class="pos-catalog">
+              
+              <!-- Buscador Rápido y Pistola de Códigos -->
+              <div class="pos-search-wrapper">
+                <svg class="search-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input
+                  type="text"
+                  id="pos-search-input"
+                  class="pos-search-field"
+                  placeholder="Escanear código de barras o buscar por nombre (F2)..."
+                  oninput="App.onPosSearch(this.value)"
+                  onkeydown="App.onPosSearchKeyDown(event)"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- Filtro de Categorías -->
+              <div class="pos-cat-bar" id="pos-categories-scroller"></div>
+
+              <!-- Rejilla de Productos -->
+              <div class="pos-cards-grid" id="pos-products-grid"></div>
+            </div>
+
+            <!-- Panel Derecho: Comprobante y Cobro -->
+            <div class="pos-cart">
+              <div class="cart-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div class="cart-title" style="margin-bottom: 0;">Ticket de venta</div>
+                    <span id="pos-cart-count" class="badge badge-neutral">0 artículos</span>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-secondary btn-icon" onclick="App.clearCart()" title="Limpiar ticket actual">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </button>
+                </div>
+                <div class="client-picker-row">
+                  <select id="pos-client-select" class="select-field"></select>
+                  <button class="btn btn-sm btn-secondary" onclick="App.openNewClientModal()" title="Registrar nuevo cliente">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Lista de Artículos en Carrito -->
+              <div class="cart-items-list" id="pos-cart-items-list">
+                <div class="cart-empty-state" id="pos-cart-empty">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+                  <p>Escanee un artículo o selecciónelo del catálogo para iniciar la venta.</p>
+                </div>
+              </div>
+
+              <!-- Resumen de Totales y Botón de Cobro -->
+              <div class="cart-footer">
+                <div class="cart-summary-line">
+                  <span>Subtotal USD:</span>
+                  <span class="font-mono" id="pos-summary-subtotal">$0.00</span>
+                </div>
+                <div class="cart-summary-line total">
+                  <span>Total USD:</span>
+                  <span class="font-mono" id="pos-summary-total">$0.00</span>
+                </div>
+                <div class="cart-summary-line" style="font-size: 11px; padding-bottom: 2px;">
+                  <span class="text-muted">Total en bolívares (BCV):</span>
+                  <span class="font-mono font-bold" id="pos-summary-ves" style="color: var(--primary-700);">Bs. 0,00</span>
+                </div>
+                <button class="btn btn-primary btn-checkout" id="pos-checkout-btn" disabled onclick="App.openCheckoutModal()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                  Cobrar factura (F4)
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- 3. MI TURNO Y CONTROL DE GAVETA (ARQUEO) -->
+        <section id="view-shift" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Mi turno y control de gaveta</h1>
+              <p class="view-subheading" id="shift-header-status">Terminal de mostrador y control de efectivo</p>
+            </div>
+            <div class="view-actions">
+              <button class="btn btn-secondary" onclick="App.printPreShiftSummary()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                Imprimir arqueo previo (X)
+              </button>
+            </div>
+          </div>
+
+          <!-- Métricas de Turno -->
+          <div class="stats-row mb-4">
+            <div class="stat-box">
+              <div class="stat-label">Base inicial</div>
+              <div class="stat-val font-mono" id="shift-base-cash">$0.00</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Ventas en efectivo</div>
+              <div class="stat-val font-mono text-success" id="shift-cash-sales">$0.00</div>
+              <span id="shift-sales-count" style="display:none;"></span>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Total teórico en gaveta</div>
+              <div class="stat-val font-mono text-primary font-bold" id="shift-expected-cash">$0.00</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Cobros electrónicos</div>
+              <div class="stat-val font-mono" id="shift-electronic-sales">$0.00</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <!-- Formulario de Arqueo -->
+            <div class="card" id="shift-active-panel">
+              <div class="card-header">
+                <h2 class="card-title">Conteo físico y cierre de turno</h2>
+                <span class="badge badge-success" id="shift-badge-status">Turno abierto</span>
+              </div>
+              <div class="card-body">
+                <!-- Calculadora de Gaveta: Dólares y Bolívares (Venezuela) -->
+                <details class="cash-breakdown-details">
+                  <summary class="cash-breakdown-summary">Calculadora de billetes ($ USD y Bs.)</summary>
+                  <div class="cash-breakdown-body">
+                    <div class="denom-grid">
+                      <div>
+                        <div class="denom-section-title">Efectivo en dólares ($ USD)</div>
+                        <table class="denom-table">
+                          <tr>
+                            <td>$100 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="100" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-100">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td>$50 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="50" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-50">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td>$20 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="20" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-20">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td>$10 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="10" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-10">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td>$5 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="5" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-5">$0.00</td>
+                          </tr>
+                          <tr>
+                            <td>$1 USD</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="1" data-cur="usd" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-1">$0.00</td>
+                          </tr>
+                        </table>
+                      </div>
+
+                      <div>
+                        <div class="denom-section-title">Efectivo en bolívares (Bs.)</div>
+                        <table class="denom-table">
+                          <tr>
+                            <td>Bs. 100</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="100" data-cur="bs" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-bs-100">Bs. 0,00</td>
+                          </tr>
+                          <tr>
+                            <td>Bs. 50</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="50" data-cur="bs" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-bs-50">Bs. 0,00</td>
+                          </tr>
+                          <tr>
+                            <td>Bs. 20</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="20" data-cur="bs" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-bs-20">Bs. 0,00</td>
+                          </tr>
+                          <tr>
+                            <td>Bs. 10</td>
+                            <td><input type="number" min="0" value="0" class="denom-qty" data-val="10" data-cur="bs" oninput="App.calcDenominations()" /></td>
+                            <td class="denom-subtotal font-mono" id="denom-sub-bs-10">Bs. 0,00</td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <div class="form-group mb-3">
+                  <label class="form-label" for="shift-counted-input">Efectivo físico contado</label>
+                  <div class="currency-input-wrap">
+                    <span class="currency-symbol">$</span>
+                    <input
+                      type="number"
+                      id="shift-counted-input"
+                      class="input-field font-mono font-bold"
+                      placeholder="0"
+                      min="0"
+                      oninput="App.onShiftCashCountInput(this.value)"
+                    />
+                  </div>
+                </div>
+
+                <div class="reconcile-box mb-3">
+                  <div class="reconcile-row">
+                    <span class="text-muted">Efectivo esperado en sistema:</span>
+                    <span class="font-mono font-bold" id="shift-reconcile-expected">$0</span>
+                  </div>
+                  <div class="reconcile-row border-dashed">
+                    <span class="text-muted">Efectivo físico declarado:</span>
+                    <span class="font-mono font-bold" id="shift-reconcile-counted">$0</span>
+                  </div>
+                  <div class="reconcile-row highlight">
+                    <span class="font-bold">Resultado de conciliación:</span>
+                    <span class="badge badge-neutral" id="shift-diff-badge">Pendiente de conteo</span>
+                  </div>
+                </div>
+
+                <div class="form-group mb-3">
+                  <label class="form-label" for="shift-notes-input">Observaciones del cierre</label>
+                  <textarea id="shift-notes-input" class="textarea-field" rows="2" placeholder="Novedades de caja o justificación de descuadres..."></textarea>
+                </div>
+
+                <button type="button" class="btn btn-danger w-full" onclick="App.executeShiftClose()">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Efectuar cierre de caja (corte Z)
+                </button>
+              </div>
+            </div>
+
+            <!-- Panel de Turno Cerrado -->
+            <div class="card" id="shift-closed-panel" style="display:none;">
+              <div class="card-header">
+                <h2 class="card-title">Apertura de nuevo turno</h2>
+                <span class="badge badge-neutral">Gaveta bloqueada</span>
+              </div>
+              <div class="card-body">
+                <div class="form-group mb-3">
+                  <label class="form-label" for="new-shift-base-cash">Base de efectivo inicial ($ USD)</label>
+                  <input type="number" id="new-shift-base-cash" class="input-field font-mono font-bold" value="50.00" min="0" step="0.01" />
+                </div>
+                <button type="button" class="btn btn-primary w-full" onclick="App.executeShiftOpen()">
+                  Abrir turno de caja
+                </button>
+              </div>
+            </div>
+
+            <!-- Historial de Turnos -->
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Historial de turnos y cierres</h2>
+                <button class="btn btn-sm btn-secondary" onclick="App.renderShift()">Actualizar</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Apertura</th>
+                      <th>Caja / Cajero</th>
+                      <th class="text-right">Base</th>
+                      <th class="text-right">Ventas ef.</th>
+                      <th class="text-right">Diferencia</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody id="shifts-history-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. INVENTARIO -->
+        <section id="view-inventory" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Inventario</h1>
+              <p class="view-subheading" id="inventory-total-count">Existencias y catálogo de artículos</p>
+            </div>
+            <div class="view-actions" id="inventory-action-buttons">
+              <button class="btn btn-primary" onclick="App.openNewProductModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo producto
+              </button>
+            </div>
+          </div>
+
+          <!-- Filtros de Inventario -->
+          <div class="filters-row mb-3">
+            <div class="search-field-wrap">
+              <svg class="search-svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="inv-search-input" placeholder="Filtrar por nombre, SKU o código..." oninput="App.onInventorySearch(this.value)" />
+            </div>
+
+            <select id="inv-category-filter" class="select-field" onchange="App.onInventoryCategoryChange(this.value)">
+              <option value="all">Todas las categorías</option>
+            </select>
+
+            <select id="inv-stock-filter" class="select-field" onchange="App.onInventoryStockFilterChange(this.value)">
+              <option value="all">Todos los estados</option>
+              <option value="low">Stock crítico</option>
+              <option value="out">Sin existencias</option>
+            </select>
+          </div>
+
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Artículo / descripción</th>
+                    <th>Código EAN/UPC</th>
+                    <th>Categoría</th>
+                    <th class="text-right" id="th-inv-cost">Costo</th>
+                    <th class="text-right">Precio venta</th>
+                    <th>Existencia</th>
+                    <th>Estado</th>
+                    <th class="text-right">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="inventory-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. COMPRAS -->
+        <section id="view-purchases" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Compras</h1>
+              <p class="view-subheading">Recepción y control de pedidos de proveedores</p>
+            </div>
+            <div class="view-actions">
+              <button class="btn btn-primary" onclick="App.openNewPurchaseModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Registrar compra
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>N° orden compra</th>
+                    <th>Proveedor</th>
+                    <th>Fecha de ingreso</th>
+                    <th>Artículos recibidos</th>
+                    <th class="text-right">Total factura</th>
+                    <th>Estado</th>
+                    <th class="text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="purchases-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. AJUSTES -->
+        <section id="view-adjustments" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Ajustes</h1>
+              <p class="view-subheading">Control de mermas, averías y garantías de artículos</p>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Registrar salida o ajuste</h2>
+              </div>
+              <div class="card-body">
+                <form onsubmit="App.saveAdjustment(event)">
+                  <div class="form-group mb-3">
+                    <label class="form-label" for="adj-product-select">Artículo a ajustar</label>
+                    <select id="adj-product-select" class="select-field" required></select>
+                  </div>
+
+                  <div class="grid-2 mb-3">
+                    <div class="form-group">
+                      <label class="form-label" for="adj-type">Tipo de operación</label>
+                      <select id="adj-type" class="select-field">
+                        <option value="salida">Salida (merma, daño o garantía)</option>
+                        <option value="entrada">Entrada (ajuste físico sobrante)</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="adj-qty">Cantidad</label>
+                      <input type="number" id="adj-qty" class="input-field font-mono" min="1" placeholder="Ej: 2" required />
+                    </div>
+                  </div>
+
+                  <div class="form-group mb-4">
+                    <label class="form-label" for="adj-reason">Motivo / destino</label>
+                    <input type="text" id="adj-reason" class="input-field" placeholder="Ej: Merma por caja averiada en estante" required />
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-full">
+                    Aplicar movimiento inmediato
+                  </button>
+                </form>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">Historial reciente de movimientos</h2>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="App.renderAdjustments()">Actualizar</button>
+              </div>
+              <div class="table-container">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Artículo</th>
+                      <th>Tipo</th>
+                      <th class="text-right">Cant</th>
+                      <th>Motivo</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adjustments-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. CLIENTES -->
+        <section id="view-clients" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Directorio de clientes</h1>
+              <p class="view-subheading">Directorio comercial de clientes</p>
+            </div>
+            <div class="view-actions">
+              <input type="search" id="client-search-input" class="input-field" placeholder="Buscar por nombre, cédula o teléfono..." oninput="App.filterClients(this.value)" style="max-width: 280px;" />
+              <button class="btn btn-primary" onclick="App.openNewClientModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo cliente
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Nombre / razón social</th>
+                    <th>Cédula / RIF</th>
+                    <th>Teléfono</th>
+                    <th>Dirección</th>
+                    <th>Historial compras</th>
+                    <th class="text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="clients-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 8. PROVEEDORES -->
+        <section id="view-suppliers" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Directorio de proveedores</h1>
+              <p class="view-subheading">Distribuidores y fabricantes</p>
+            </div>
+            <div class="view-actions">
+              <input type="search" id="supplier-search-input" class="input-field" placeholder="Buscar por razón social, RIF o contacto..." oninput="App.filterSuppliers(this.value)" style="max-width: 280px;" />
+              <button class="btn btn-primary" onclick="App.openNewSupplierModal()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Nuevo proveedor
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Razón social</th>
+                    <th>RIF</th>
+                    <th>Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Correo</th>
+                    <th class="text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="suppliers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 9. REPORTES Y UTILIDADES (SOLO ADMIN) -->
+        <section id="view-reports" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Informes financieros y utilidades</h1>
+              <p class="view-subheading">Resumen financiero y valorización de stock</p>
+            </div>
+            <div class="view-actions">
+              <button class="btn btn-primary" onclick="App.exportReportsExcel()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Exportar a CSV / Excel
+              </button>
+            </div>
+          </div>
+
+          <div class="stats-row mb-4">
+            <div class="stat-box">
+              <div class="stat-label">Total ventas registradas</div>
+              <div class="stat-val font-mono text-success" id="rep-total-ventas">$0.00</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Total transacciones emitidas</div>
+              <div class="stat-val font-mono text-primary" id="rep-total-transacciones">0</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-label">Valorización de almacén a costo</div>
+              <div class="stat-val font-mono" id="rep-total-inventario">$0.00</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Distribución de existencias por categoría</h2>
+            </div>
+            <div class="card-body" id="rep-cat-breakdown"></div>
+          </div>
+        </section>
+
+        <!-- 10. USUARIOS (SOLO ADMIN) -->
+        <section id="view-users" class="view-section" style="display:none;">
+          <div class="view-header">
+            <div>
+              <h1 class="view-heading">Usuarios del sistema</h1>
+              <p class="view-subheading">Gestión de personal y accesos a terminales</p>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="table-container">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Usuario / nombre</th>
+                    <th>Rol en tienda</th>
+                    <th>Estado</th>
+                    <th>Último acceso</th>
+                    <th class="text-right">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Configuración de Tasa Oficial BCV para Administrador -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Configuración de tasa oficial BCV</h2>
+                <p class="text-xs text-muted">Tasa de cambio de referencia en bolívares para las terminales de caja</p>
+              </div>
+              <button class="btn btn-sm btn-primary" onclick="App.openExchangeRateModal()">Actualizar tasa</button>
+            </div>
+            <div class="card-body">
+              <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:var(--bg-app); border:1px solid var(--border-color); border-radius:var(--radius-sm);">
+                <div>
+                  <div class="text-xs text-muted font-semibold">Tasa actual configurada</div>
+                  <div class="font-mono font-bold" id="admin-settings-rate-display" style="font-size:18px; color:var(--primary-700); margin-top:2px;">Bs. 894,88 por USD</div>
+                </div>
+                <div class="text-xs text-muted">Sincronizada con el módulo de cobro y punto de venta</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- ── MODALES Y DIÁLOGOS (<dialog>) ─────────────────────── -->
+
+  <!-- 1. Modal de Cobro POS (Venezuela Multimoneda) -->
+  <dialog id="checkout-dialog" class="modal-dialog">
+    <div class="modal-content" style="width: 540px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Procesar cobro de venta</h3>
+        <button class="modal-close" onclick="document.getElementById('checkout-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="checkout-client-box mb-3">
+          <span class="text-muted">Cliente:</span>
+          <strong id="pay-modal-client-name">Cliente mostrador</strong>
+        </div>
+
+        <div class="checkout-total-banner mb-3">
+          <div class="text-xs text-muted">Total en dólares (USD)</div>
+          <div class="checkout-huge-total font-mono" id="pay-modal-total-display">$0.00</div>
+          <div class="text-xs font-mono font-bold" id="pay-modal-total-bs-display" style="margin-top: 4px; color: var(--primary-700);">Equivalente: Bs. 0,00 (Tasa BCV)</div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label">Forma de pago</label>
+          <div class="payment-methods-grid" style="grid-template-columns: repeat(3, 1fr); gap: 6px;">
+            <button type="button" class="pay-method-btn active" onclick="App.setPaymentMethod('Pago Móvil', this)">
+              Pago Móvil
+            </button>
+            <button type="button" class="pay-method-btn" onclick="App.setPaymentMethod('Punto de Venta', this)">
+              Punto de venta
+            </button>
+            <button type="button" class="pay-method-btn" onclick="App.setPaymentMethod('Efectivo USD ($)', this)">
+              Efectivo USD ($)
+            </button>
+            <button type="button" class="pay-method-btn" onclick="App.setPaymentMethod('Efectivo Bs.', this)">
+              Efectivo Bs.
+            </button>
+            <button type="button" class="pay-method-btn" onclick="App.setPaymentMethod('Zelle', this)">
+              Zelle ($)
+            </button>
+            <button type="button" class="pay-method-btn" onclick="App.setPaymentMethod('Transferencia Bs.', this)">
+              Transferencia Bs.
+            </button>
+          </div>
+        </div>
+
+        <!-- Detalles Pago Móvil -->
+        <div id="pagomovil-payment-details" class="payment-method-box">
+          <div class="payment-meta-badge">
+            <strong>Banco:</strong> Banesco (0134)<br/>
+            <strong>Teléfono:</strong> 0414-2345678<br/>
+            <strong>RIF:</strong> J-41235678-0 (Bicicletas Mejía, C.A.)<br/>
+            <strong>Monto exacto:</strong> <span id="pm-monto-ves" class="text-primary font-bold">Bs. 0,00</span>
+          </div>
+          <div class="form-group mt-2">
+            <label class="form-label" for="pm-ref-input">Últimos 4 dígitos de referencia</label>
+            <input type="text" id="pm-ref-input" class="input-field font-mono font-bold" placeholder="Ej: 8492" maxlength="8" oninput="App.onReferenceInput()" />
+          </div>
+        </div>
+
+        <!-- Detalles Punto de Venta -->
+        <div id="pospoint-payment-details" class="payment-method-box" style="display:none;">
+          <div class="payment-meta-badge">
+            <strong>Monto en Punto:</strong> <span id="point-monto-ves" class="text-primary font-bold">Bs. 0,00</span>
+          </div>
+          <div class="form-group mt-2">
+            <label class="form-label" for="point-ref-input">N° de lote / aprobación</label>
+            <input type="text" id="point-ref-input" class="input-field font-mono" placeholder="Ej: 001429" oninput="App.onReferenceInput()" />
+          </div>
+        </div>
+
+        <!-- Detalles Efectivo USD -->
+        <div id="cash-payment-details" class="payment-method-box" style="display:none;">
+          <div class="form-group mb-2">
+            <label class="form-label" for="pay-modal-cash-received">Efectivo USD recibido ($)</label>
+            <div class="currency-input-wrap">
+              <span class="currency-symbol">$</span>
+              <input type="number" id="pay-modal-cash-received" class="input-field font-mono font-bold" step="any" min="0" oninput="App.updateChangeCalculation()" />
+            </div>
+          </div>
+
+          <div class="quick-cash-row mb-2">
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash('exact')">Exacto</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash(5)">$5</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash(10)">$10</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash(20)">$20</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash(50)">$50</button>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="App.setQuickCash(100)">$100</button>
+          </div>
+
+          <div class="change-calc-box">
+            <span>Cambio / vuelto USD:</span>
+            <span class="font-mono font-bold text-success" id="pay-modal-change-display">$0.00</span>
+          </div>
+        </div>
+
+        <!-- Detalles Zelle -->
+        <div id="zelle-payment-details" class="payment-method-box" style="display:none;">
+          <div class="payment-meta-badge">
+            <strong>Correo Zelle:</strong> pagos@bicicletasmejia.com<br/>
+            <strong>Titular:</strong> Bicicletas Mejía, C.A.<br/>
+            <strong>Monto:</strong> <span id="zelle-monto-usd" class="text-primary font-bold">$0.00 USD</span>
+          </div>
+          <div class="form-group mt-2">
+            <label class="form-label" for="zelle-ref-input">Nombre del titular / referencia Zelle</label>
+            <input type="text" id="zelle-ref-input" class="input-field" placeholder="Nombre de quien envía..." oninput="App.onReferenceInput()" />
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('checkout-dialog').close()">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="pay-confirm-submit-btn" onclick="App.confirmSale()">Confirmar y emitir comprobante</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 2. Modal de Comprobante / Tirilla Térmica -->
+  <dialog id="receipt-dialog" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Comprobante de caja</h3>
+        <button class="modal-close" onclick="document.getElementById('receipt-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="thermal-paper" id="thermal-receipt-content"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('receipt-dialog').close()">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="App.printReceipt()">Imprimir tirilla</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- 3. Modal de Producto -->
+  <dialog id="product-form-dialog" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="product-form-title">Nuevo artículo</h3>
+        <button class="modal-close" onclick="document.getElementById('product-form-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form onsubmit="App.saveProductForm(event)">
+        <div class="modal-body">
+          <input type="hidden" id="product-id-input" value="" />
+          <div class="form-group mb-3">
+            <label class="form-label" for="prod-name">Descripción del producto</label>
+            <input type="text" id="prod-name" class="input-field" placeholder="Ej: Tensor Shimano Deore M5100" required />
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="prod-barcode">Código de barras (EAN/UPC)</label>
+              <input type="text" id="prod-barcode" class="input-field font-mono" placeholder="770000000000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prod-sku">Código interno (SKU)</label>
+              <input type="text" id="prod-sku" class="input-field font-mono" placeholder="BM-0000" />
+            </div>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="prod-category">Categoría</label>
+              <select id="prod-category" class="select-field" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prod-unit">Unidad de medida</label>
+              <select id="prod-unit" class="select-field">
+                <option value="UND">Unidad (UND)</option>
+                <option value="PAR">Par (PAR)</option>
+                <option value="JGO">Juego (JGO)</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="prod-cost">Precio de costo ($)</label>
+              <input type="number" id="prod-cost" class="input-field font-mono" min="0" placeholder="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prod-price">Precio de venta ($)</label>
+              <input type="number" id="prod-price" class="input-field font-mono font-bold" min="0" placeholder="0" required />
+            </div>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="prod-stock">Stock inicial</label>
+              <input type="number" id="prod-stock" class="input-field font-mono" min="0" value="0" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="prod-min-stock">Stock mínimo</label>
+              <input type="number" id="prod-min-stock" class="input-field font-mono" min="0" value="3" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('product-form-dialog').close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar producto</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 4. Modal de Entrada de Mercancía -->
+  <dialog id="purchase-dialog" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Registrar entrada de mercancía</h3>
+        <button class="modal-close" onclick="document.getElementById('purchase-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form onsubmit="App.confirmNewPurchase(event)">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label class="form-label" for="purchase-supplier-select">Proveedor</label>
+            <select id="purchase-supplier-select" class="select-field" required></select>
+          </div>
+          <div class="form-group mb-3">
+            <label class="form-label" for="purchase-product-select">Artículo a ingresar</label>
+            <select id="purchase-product-select" class="select-field" required></select>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="purchase-qty">Cantidad recibida</label>
+              <input type="number" id="purchase-qty" class="input-field font-mono" min="1" value="5" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="purchase-unit-cost">Costo unitario ($)</label>
+              <input type="number" id="purchase-unit-cost" class="input-field font-mono" min="0" placeholder="0" required />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('purchase-dialog').close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Confirmar ingreso a almacén</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 5. Modal de Cliente -->
+  <dialog id="client-dialog" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Registrar nuevo cliente</h3>
+        <button class="modal-close" onclick="document.getElementById('client-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form onsubmit="App.saveClientForm(event)">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label class="form-label" for="client-name">Nombre completo</label>
+            <input type="text" id="client-name" class="input-field" placeholder="Nombre y apellidos" required />
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="client-doc">Cédula / RIF</label>
+              <input type="text" id="client-doc" class="input-field font-mono" placeholder="V-14.892.341 o J-41235678-0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="client-phone">Teléfono / WhatsApp</label>
+              <input type="tel" id="client-phone" class="input-field" placeholder="0414-2345678" />
+            </div>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="client-email">Correo electrónico</label>
+              <input type="email" id="client-email" class="input-field" placeholder="cliente@correo.com" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="client-address">Dirección</label>
+              <input type="text" id="client-address" class="input-field" placeholder="Av. 5 de Julio, Maracaibo" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('client-dialog').close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar cliente</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 6. Modal de Proveedor -->
+  <dialog id="supplier-dialog" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Registrar nuevo proveedor</h3>
+        <button class="modal-close" onclick="document.getElementById('supplier-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form onsubmit="App.saveSupplierForm(event)">
+        <div class="modal-body">
+          <div class="form-group mb-3">
+            <label class="form-label" for="sup-name">Razón social</label>
+            <input type="text" id="sup-name" class="input-field" placeholder="Nombre comercial" required />
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="sup-nit">RIF (Registro de Información Fiscal)</label>
+              <input type="text" id="sup-nit" class="input-field font-mono" placeholder="J-31298412-0" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sup-contact">Persona de contacto</label>
+              <input type="text" id="sup-contact" class="input-field" placeholder="Asesor comercial" />
+            </div>
+          </div>
+          <div class="grid-2 mb-3">
+            <div class="form-group">
+              <label class="form-label" for="sup-phone">Teléfono de pedidos</label>
+              <input type="tel" id="sup-phone" class="input-field" placeholder="0212-9876543 / 0414-1234567" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sup-email">Correo electrónico</label>
+              <input type="email" id="sup-email" class="input-field" placeholder="pedidos@empresa.com" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('supplier-dialog').close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar proveedor</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Modal de Actualización de Tasa Oficial BCV -->
+  <dialog id="exchange-rate-dialog" class="modal-dialog">
+    <div class="modal-content" style="max-width: 380px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Actualizar tasa oficial BCV</h3>
+        <button class="modal-close" onclick="document.getElementById('exchange-rate-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form id="exchange-rate-form" onsubmit="App.saveExchangeRate(event)">
+        <div class="modal-body">
+          <div class="form-group mb-2">
+            <label class="form-label" for="input-exchange-rate">Tasa de cambio (Bs. por 1 USD)</label>
+            <div class="currency-input-wrap">
+              <span class="currency-symbol">Bs.</span>
+              <input type="number" id="input-exchange-rate" class="input-field font-mono font-bold" step="0.01" min="1" required />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('exchange-rate-dialog').close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar tasa</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- 7. Modal de Atajos de Teclado -->
+  <dialog id="shortcuts-dialog" class="modal-dialog">
+    <div class="modal-content" style="max-width: 440px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Atajos de teclado (mostrador)</h3>
+        <button class="modal-close" onclick="document.getElementById('shortcuts-dialog').close()" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="data-table">
+          <tbody>
+            <tr>
+              <td><kbd class="badge badge-neutral font-mono font-bold">F2</kbd></td>
+              <td>Buscador / Lector de barras</td>
+            </tr>
+            <tr>
+              <td><kbd class="badge badge-neutral font-mono font-bold">Enter</kbd></td>
+              <td>Cargar artículo escaneado</td>
+            </tr>
+            <tr>
+              <td><kbd class="badge badge-neutral font-mono font-bold">F4</kbd></td>
+              <td>Cobrar ticket actual</td>
+            </tr>
+            <tr>
+              <td><kbd class="badge badge-neutral font-mono font-bold">F9</kbd></td>
+              <td>Nuevo cliente rápido</td>
+            </tr>
+            <tr>
+              <td><kbd class="badge badge-neutral font-mono font-bold">Esc</kbd></td>
+              <td>Cerrar ventana emergente</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="document.getElementById('shortcuts-dialog').close()">Entendido</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Notificaciones Toast -->
+  <div id="toast-container" class="toast-stack"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

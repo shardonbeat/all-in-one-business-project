@@ -1,0 +1,517 @@
+/* ══════════════════════════════════════════════════════════
+   PUNTO DE VENTA (POS) — ESTILO HÍBRIDO MOSTRADOR + TALLER
+   Inspirado en Lightspeed Retail y Trek Ascend
+   ══════════════════════════════════════════════════════════ */
+
+.pos-container {
+  display: grid;
+  grid-template-columns: 1fr 390px;
+  gap: 16px;
+  height: calc(100vh - var(--header-height) - 40px);
+  min-height: 540px;
+}
+
+/* ── Catálogo y Búsqueda (Panel Izquierdo) ────────────────── */
+.pos-catalog {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  padding: 16px;
+  gap: 14px;
+}
+
+.pos-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pos-search-wrapper .search-svg {
+  position: absolute;
+  left: 14px;
+  color: var(--text-dim);
+  pointer-events: none;
+}
+
+.pos-search-field {
+  width: 100%;
+  height: 42px;
+  padding-left: 40px;
+  padding-right: 14px;
+  font-size: 13px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  outline: none;
+  transition: all 120ms ease;
+}
+
+.pos-search-field:focus {
+  background-color: #ffffff;
+  border-color: var(--primary-700);
+  box-shadow: 0 0 0 3px var(--primary-100);
+}
+
+/* Barra de Chips de Categorías (Estilo Specialized/Trek) */
+.pos-cat-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.pos-cat-bar::-webkit-scrollbar {
+  height: 4px;
+}
+.pos-cat-bar::-webkit-scrollbar-thumb {
+  background: var(--border-dark);
+  border-radius: 4px;
+}
+
+.pos-cat-chip {
+  padding: 6px 14px;
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 120ms ease;
+  user-select: none;
+}
+
+.pos-cat-chip:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+  border-color: var(--border-dark);
+}
+
+.pos-cat-chip.active {
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(21, 128, 61, 0.2);
+}
+
+/* Rejilla de Tarjetas de Producto */
+.pos-cards-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+  overflow-y: auto;
+  align-content: start;
+  padding-right: 4px;
+}
+
+.pos-cards-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.pos-cards-grid::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 6px;
+}
+
+.pos-product-card {
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  min-height: 128px;
+  transition: all 120ms ease;
+  position: relative;
+}
+
+.pos-product-card:hover {
+  border-color: var(--primary-600);
+  box-shadow: 0 4px 10px rgba(21, 128, 61, 0.08);
+  transform: translateY(-1px);
+}
+
+.pos-product-card.out-of-stock {
+  opacity: 0.55;
+  background-color: var(--bg-app);
+  cursor: not-allowed;
+  border-color: var(--border-light);
+}
+.pos-product-card.out-of-stock:hover {
+  transform: none;
+  border-color: var(--border-light);
+  box-shadow: none;
+}
+
+.pos-card-category {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+}
+
+.pos-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.pos-card-sku {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+
+.pos-card-footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pos-card-price {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.pos-card-stock-badge {
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+/* ── Carrito y Ticket de Venta (Panel Derecho) ────────────── */
+.pos-cart {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cart-header {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #fafaf9;
+}
+
+.cart-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cart-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.01em;
+}
+
+.client-picker-row {
+  display: flex;
+  gap: 6px;
+}
+.client-picker-row select {
+  flex: 1;
+}
+
+/* Lista de Artículos */
+.cart-items-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: var(--bg-app);
+}
+
+.cart-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-light);
+  text-align: center;
+  padding: 24px;
+  gap: 10px;
+}
+.cart-empty-state svg {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+.cart-empty-state p {
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 200px;
+}
+
+.pos-cart-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  transition: border-color 100ms ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+.pos-cart-item:hover {
+  border-color: var(--border-dark);
+}
+
+.pos-item-info {
+  min-width: 0;
+}
+
+.pos-item-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pos-item-unit-price {
+  font-size: 11px;
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+.pos-item-qty-ctrl {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+}
+
+.pos-qty-btn {
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 80ms ease;
+}
+.pos-qty-btn:hover {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+}
+
+.pos-qty-value {
+  width: 26px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.pos-item-total {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-main);
+  text-align: right;
+  min-width: 65px;
+  font-family: var(--font-mono);
+}
+
+.pos-item-remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: var(--radius-xs);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pos-item-remove-btn:hover {
+  color: var(--status-danger-text);
+}
+
+/* Pie del Ticket de Venta / Totales */
+.cart-footer {
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cart-summary-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.cart-summary-line span:last-child {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.cart-summary-line.total {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-color);
+  align-items: baseline;
+}
+.cart-summary-line.total #pos-summary-total {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--primary-700);
+  font-family: var(--font-mono);
+}
+
+.btn-checkout {
+  height: 44px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  margin-top: 6px;
+  background-color: var(--primary-700);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(21, 128, 61, 0.25);
+  transition: all 120ms ease;
+}
+.btn-checkout:hover {
+  background-color: var(--primary-800);
+}
+.btn-checkout:active {
+  background-color: var(--primary-900);
+  transform: translateY(1px);
+}
+.btn-checkout:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ── Modal de Cobro y Facturación ─────────────────────────── */
+.checkout-client-box {
+  background-color: var(--bg-app);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkout-total-banner {
+  background-color: var(--primary-50);
+  border: 1px solid var(--primary-200);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  text-align: center;
+}
+
+.checkout-huge-total {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary-700);
+  font-family: var(--font-mono);
+}
+
+.payment-methods-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pay-method-btn {
+  height: 42px;
+  background-color: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+.pay-method-btn:hover {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  border-color: var(--border-dark);
+}
+.pay-method-btn.active {
+  background-color: var(--primary-700);
+  border-color: var(--primary-700);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(21, 128, 61, 0.25);
+}
+
+.quick-cash-row {
+  display: flex;
+  gap: 8px;
+}
+.quick-cash-row .btn {
+  flex: 1;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.change-calc-box {
+  background-color: var(--status-success-bg);
+  border: 1px solid var(--status-success-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--status-success-text);
+}
+.change-calc-box span:last-child {
+  font-size: 18px;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
